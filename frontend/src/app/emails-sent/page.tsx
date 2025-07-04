@@ -2,6 +2,7 @@
 
 import { Trash2, Star } from "lucide-react"
 import Sidebar from "@/components/Sidebar/Sidebar"
+import { useEffect, useState } from "react"
 
 interface SentEmail {
   id: string
@@ -9,37 +10,39 @@ interface SentEmail {
   subject: string
   body: string
   isFavorite: boolean
-  sentDate: string
+  sentDate?: string
 }
-
 export default function EmailsSent() {
-  // Mock data for sent emails
-  const sentEmails: SentEmail[] = [
-    {
-      id: "1",
-      recipient: "cliente2@gmail.com",
-      subject: "Potenciemos tu marca con...",
-      body: "Hola Cliente2,\nEstuve analizando tu marca y creo que podemos ayudarte a crecer con una propuesta de marketing 100% enfocada en tus objetivos.\nNos especializamos en estrategias pe...",
-      isFavorite: false,
-      sentDate: "2024-01-15",
-    },
-    {
-      id: "2",
-      recipient: "cliente2@gmail.com",
-      subject: "Potenciemos tu marca con...",
-      body: "Hola Cliente2,\nEstuve analizando tu marca y creo que podemos ayudarte a crecer con una propuesta de marketing 100% enfocada en tus objetivos.\nNos especializamos en estrategias pe...",
-      isFavorite: false,
-      sentDate: "2024-01-14",
-    },
-    {
-      id: "3",
-      recipient: "cliente2@gmail.com",
-      subject: "Potenciemos tu marca con...",
-      body: "Hola Cliente2,\nEstuve analizando tu marca y creo que podemos ayudarte a crecer con una propuesta de marketing 100% enfocada en tus objetivos.\nNos especializamos en estrategias pe...",
-      isFavorite: false,
-      sentDate: "2024-01-13",
-    },
-  ]
+  const [sentEmails, setSentEmails] = useState<SentEmail[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    const fetchEmails = async () => {
+      setLoading(true)
+      setError("")
+      try {
+        const res = await fetch("https://easyemail-api.onrender.com/email-response")
+        if (!res.ok) throw new Error("No se pudo obtener los emails enviados")
+        const data = await res.json()
+        // Map API response to SentEmail[]
+        const mapped: SentEmail[] = (Array.isArray(data) ? data : []).map((item: any) => ({
+          id: String(item.id),
+          recipient: item.client?.email || "",
+          subject: item.tag || "(Sin asunto)",
+          body: item.content || "",
+          isFavorite: false,
+          sentDate: item.createdAt || undefined,
+        }))
+        setSentEmails(mapped)
+      } catch (err: any) {
+        setError(err.message || "Error desconocido")
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchEmails()
+  }, [])
 
   const handleDelete = (emailId: string) => {
     console.log("Delete email:", emailId)
@@ -61,6 +64,12 @@ export default function EmailsSent() {
         <h1 className="text-3xl font-semibold text-gray-800 mb-8 text-center">Emails Enviados</h1>
 
         <div className="max-w-6xl mx-auto">
+          {loading && (
+            <div className="text-center py-12 text-blue-600">Cargando emails enviados...</div>
+          )}
+          {error && (
+            <div className="text-center py-12 text-red-600">{error}</div>
+          )}
           {/* Email Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {sentEmails.map((email) => (
@@ -113,7 +122,7 @@ export default function EmailsSent() {
           </div>
 
           {/* Empty state when no emails */}
-          {sentEmails.length === 0 && (
+          {!loading && sentEmails.length === 0 && (
             <div className="text-center py-12">
               <div className="text-gray-400 text-lg mb-2">No hay emails enviados</div>
               <div className="text-gray-500 text-sm">Los emails que envíes aparecerán aquí</div>

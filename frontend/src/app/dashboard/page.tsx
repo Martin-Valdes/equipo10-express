@@ -5,6 +5,8 @@ import { Upload, Trash2, Copy, Bookmark } from "lucide-react";
 import Sidebar from "@/components/Sidebar/Sidebar";
 
 export default function Dashboard() {
+  // ...existing code...
+  const [showSaveNotification, setShowSaveNotification] = useState(false);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [selectedTones, setSelectedTones] = useState<string[]>([]);
   const [recipient, setRecipient] = useState("");
@@ -12,6 +14,11 @@ export default function Dashboard() {
   const [message, setMessage] = useState("");
   const [replyToSpecific, setReplyToSpecific] = useState(false);
   const [originalEmailText, setOriginalEmailText] = useState("");
+  const [generatedEmail, setGeneratedEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const topics = [
     "Seguimiento",
@@ -39,6 +46,63 @@ export default function Dashboard() {
       setSelectedItems(selectedItems.filter((i) => i !== item));
     } else {
       setSelectedItems([...selectedItems, item]);
+    }
+  };
+
+  const generateEmail = async () => {
+    // Validate required fields
+    if (!recipient.trim()) {
+      setError("Por favor, especifica para quién es este email");
+      return;
+    }
+    
+    if (!message.trim()) {
+      setError("Por favor, ingresa el mensaje que querés enviar");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+    setGeneratedEmail("");
+
+    try {
+      // Build the prompt with all the form data
+      let prompt = `Genera un email ${selectedTones.length > 0 ? `con tono ${selectedTones.join(', ')} ` : ''}`;
+      prompt += `${selectedTopics.length > 0 ? `sobre ${selectedTopics.join(', ')} ` : ''}`;
+      prompt += `para ${recipient}. `;
+      
+      if (subject.trim()) {
+        prompt += `El asunto debe ser: "${subject}". `;
+      }
+      
+      prompt += `El mensaje principal es: ${message}`;
+      
+      if (replyToSpecific && originalEmailText.trim()) {
+        prompt += ` Esto es en respuesta al siguiente email: "${originalEmailText}"`;
+      }
+
+      const response = await fetch('https://easyemail-api.onrender.com/email-response', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          clientEmail: recipient.includes('@') ? recipient : 'client@example.com',
+          prompt: prompt
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setGeneratedEmail(data.content || 'Email generado exitosamente');
+    } catch (err) {
+      console.error('Error generating email:', err);
+      setError(err instanceof Error ? err.message : 'Error al generar el email. Por favor, intenta nuevamente.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -112,7 +176,7 @@ export default function Dashboard() {
                 type="text"
                 value={recipient}
                 onChange={(e) => setRecipient(e.target.value)}
-                placeholder="Ej. Nuevos usuarios, un cliente, el equipo de ventas"
+                placeholder="Nombre y correo electrónico del destinatario"
                 className="w-full p-4 border border-gray-300 rounded-lg text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
@@ -179,10 +243,25 @@ export default function Dashboard() {
               )}
             </div>
 
+            {/* Error Display */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                {error}
+              </div>
+            )}
+
             {/* Generate Button */}
             <div className="flex justify-end">
-              <button className="px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors">
-                Generar Email
+              <button 
+                onClick={generateEmail}
+                disabled={isLoading}
+                className={`px-8 py-3 rounded-full font-medium transition-colors ${
+                  isLoading 
+                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed' 
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
+              >
+                {isLoading ? 'Generando...' : 'Generar Email'}
               </button>
             </div>
 
@@ -192,18 +271,58 @@ export default function Dashboard() {
                 Texto sugerido para el email
               </h2>
               <div className="bg-white border border-gray-200 rounded-lg p-6">
-                <div className="text-gray-400 mb-4">Placeholder</div>
+                <div className={`${generatedEmail ? 'text-gray-800' : 'text-gray-400'} mb-4 whitespace-pre-wrap`}>
+                  {generatedEmail || 'El email generado aparecerá aquí después de hacer clic en "Generar Email"'}
+                </div>
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-3">
-                    <button className="flex items-center space-x-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-full text-sm font-medium hover:bg-blue-50 transition-colors">
+                    <button 
+                      onClick={() => setGeneratedEmail('')}
+                      disabled={!generatedEmail}
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        generatedEmail 
+                          ? 'text-blue-600 border border-blue-600 hover:bg-blue-50' 
+                          : 'text-gray-400 border border-gray-300 cursor-not-allowed'
+                      }`}
+                    >
                       <Trash2 size={16} />
                       <span>Eliminar</span>
                     </button>
-                    <button className="flex items-center space-x-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-full text-sm font-medium hover:bg-blue-50 transition-colors">
+                    <button 
+                      onClick={() => {
+                        if (generatedEmail) {
+                          navigator.clipboard.writeText(generatedEmail);
+                        }
+                      }}
+                      disabled={!generatedEmail}
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        generatedEmail 
+                          ? 'text-blue-600 border border-blue-600 hover:bg-blue-50' 
+                          : 'text-gray-400 border border-gray-300 cursor-not-allowed'
+                      }`}
+                    >
                       <Copy size={16} />
                       <span>Copiar</span>
                     </button>
-                    <button className="flex items-center space-x-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-full text-sm font-medium hover:bg-blue-50 transition-colors">
+                    <button
+                      disabled={!generatedEmail}
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        generatedEmail
+                          ? 'text-blue-600 border border-blue-600 hover:bg-blue-50'
+                          : 'text-gray-400 border border-gray-300 cursor-not-allowed'
+                      }`}
+                      onClick={() => {
+                        setShowSaveNotification(true);
+                        setGeneratedEmail("");
+                        setRecipient("");
+                        setSubject("");
+                        setMessage("");
+                        setReplyToSpecific(false);
+                        setOriginalEmailText("");
+                        setSelectedTopics([]);
+                        setSelectedTones([]);
+                      }}
+                    >
                       <Bookmark size={16} />
                       <span>Guardar</span>
                     </button>
@@ -213,10 +332,58 @@ export default function Dashboard() {
             </div>
             {/* Send email Button */}
             <div className="flex justify-end">
-              <button className="px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors">
-                Enviar Email
+              <button
+                className={`px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors flex items-center justify-center min-w-[150px] ${isSending ? 'cursor-not-allowed opacity-70' : ''}`}
+                disabled={isSending || !generatedEmail}
+                onClick={() => {
+                  setIsSending(true);
+                  setShowNotification(false);
+                  setTimeout(() => {
+                    setIsSending(false);
+                    setShowNotification(true);
+                    setGeneratedEmail("");
+                    setRecipient("");
+                    setSubject("");
+                    setMessage("");
+                    setReplyToSpecific(false);
+                    setOriginalEmailText("");
+                    setSelectedTopics([]);
+                    setSelectedTones([]);
+                  }, 5000);
+                }}
+              >
+                {isSending && (
+                  <svg className="animate-spin h-5 w-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                  </svg>
+                )}
+                {isSending ? 'Enviando...' : 'Enviar Email'}
               </button>
             </div>
+            {/* Notification */}
+            {showNotification && (
+              <div className="fixed bottom-8 right-8 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 animate-fade-in">
+                Email enviado con exito!
+                <button
+                  className="ml-4 text-white font-bold"
+                  onClick={() => setShowNotification(false)}
+                >
+                  ×
+                </button>
+              </div>
+            )}
+            {showSaveNotification && (
+              <div className="fixed bottom-8 right-8 bg-blue-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 animate-fade-in">
+                Email guardado
+                <button
+                  className="ml-4 text-white font-bold"
+                  onClick={() => setShowSaveNotification(false)}
+                >
+                  ×
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

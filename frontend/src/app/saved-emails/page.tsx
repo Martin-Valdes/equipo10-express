@@ -2,6 +2,7 @@
 
 import { Edit, Star } from "lucide-react"
 import Sidebar from "@/components/Sidebar/Sidebar"
+import { useState, useEffect } from "react";
 
 interface SavedEmail {
   id: string
@@ -12,37 +13,38 @@ interface SavedEmail {
 }
 
 export default function SavedEmails() {
-  // Mock data for saved emails
-  const savedEmails: SavedEmail[] = [
-    {
-      id: "1",
-      recipient: "cliente2@gmail.com",
-      subject: "Potenciemos tu marca con...",
-      body: "Hola Cliente2,\nEstuve analizando tu marca y creo que podemos ayudarte a crecer con una propuesta de marketing 100% enfocada en tus objetivos.\nNos especializamos en estrategias pe...",
-      isFavorite: false,
-    },
-    {
-      id: "2",
-      recipient: "cliente2@gmail.com",
-      subject: "Potenciemos tu marca con...",
-      body: "Hola Cliente2,\nEstuve analizando tu marca y creo que podemos ayudarte a crecer con una propuesta de marketing 100% enfocada en tus objetivos.\nNos especializamos en estrategias pe...",
-      isFavorite: false,
-    },
-    {
-      id: "3",
-      recipient: "cliente2@gmail.com",
-      subject: "Potenciemos tu marca con...",
-      body: "Hola Cliente2,\nEstuve analizando tu marca y creo que podemos ayudarte a crecer con una propuesta de marketing 100% enfocada en tus objetivos.\nNos especializamos en estrategias pe...",
-      isFavorite: false,
-    },
-    {
-      id: "4",
-      recipient: "cliente2@gmail.com",
-      subject: "Potenciemos tu marca con...",
-      body: "Hola Cliente2,\nEstuve analizando tu marca y creo que podemos ayudarte a crecer con una propuesta de marketing 100% enfocada en tus objetivos.\nNos especializamos en estrategias pe...",
-      isFavorite: false,
-    },
-  ]
+  const [sentEmails, setSentEmails] = useState<SavedEmail[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // Fetch email-response/1 on mount
+  useEffect(() => {
+    const fetchEmail = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch("https://easyemail-api.onrender.com/email-response");
+        if (!res.ok) throw new Error("No se pudo obtener el email guardado");
+        const data = await res.json();
+        // Map API response to SavedEmail[]
+        const mapped: SavedEmail[] = [
+          {
+            id: String(data.id),
+            recipient: data.client?.email || "",
+            subject: data.tag || "(Sin asunto)",
+            body: data.content || "",
+            isFavorite: false,
+          },
+        ];
+        setSentEmails(mapped);
+      } catch (err: any) {
+        setError(err.message || "Error desconocido");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEmail();
+  }, []);
 
   const handleEdit = (emailId: string) => {
     console.log("Edit email:", emailId)
@@ -65,8 +67,14 @@ export default function SavedEmails() {
 
         <div className="max-w-6xl mx-auto">
           {/* Email Cards Grid */}
+          {loading && (
+            <div className="text-center py-12 text-blue-600">Cargando email guardado...</div>
+          )}
+          {error && (
+            <div className="text-center py-12 text-red-600">{error}</div>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {savedEmails.map((email) => (
+            {sentEmails.map((email) => (
               <div
                 key={email.id}
                 className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
