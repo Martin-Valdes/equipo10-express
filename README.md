@@ -81,8 +81,7 @@ Herramientas de QA:
 | UX/UI | Lourdes Paloma Herrera | | [LinkedIn Lourdes]	| [GitHub Lourdes]
 | UX/UI | Daiana Rodriguez | | [LinkedIn Daiana]	| [GitHub Daiana]
 | Backend	| Fernando Martin Valdes	| | [LinkedIn Jeremías]	| [GitHub Jeremías]
-| Backend	| Jhonatan Mustiola	| ![Jhonatan Mustiola](https://github.com/user-attachments/assets/7445f73e-b424-40bd-b514-14e774934988)
- | [LinkedIn Jonathan](https://www.linkedin.com/in/jhonatan-mustiola)	| [GitHub Jonathan](https://www.github.com/jmustiola)
+| Backend	| Jhonatan Mustiola	| ![Jhonatan Mustiola](https://github.com/user-attachments/assets/7445f73e-b424-40bd-b514-14e774934988) | [LinkedIn Jonathan](https://www.linkedin.com/in/jhonatan-mustiola)	| [GitHub Jonathan](https://www.github.com/jmustiola)
 | Data Analyst | Diego Borges Salces | ![Diego Borges_1](https://github.com/user-attachments/assets/56b008ee-aa16-406d-b8a8-56e25311f0d7) | [LinkedIn Diego](www.linkedin.com/in/diego-silvestre-borges-salces) | [Github Diego](https://github.com/Atlaros)
 
 🐞 Instalación y ejecución del proyecto:
