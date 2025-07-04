@@ -5,7 +5,7 @@ import { Client } from '../client/entities/client.entity';
 
 export interface LlmCompletionResult {
   llmResponseContent: string;
-  rawApiResponse: any;
+  // rawApiResponse: any;
   model: string;
 }
 
@@ -40,12 +40,12 @@ export class LlmApiService {
     }
     const llmResponseContent = response.data.choices[0].message
       .content as string;
-    const rawApiResponse = response.data;
-    const model = (response.data.model as string) || payload.model;
+    // const rawApiResponse = response.data;
+    const model = payload.model;
 
     return {
       llmResponseContent,
-      rawApiResponse,
+      // rawApiResponse,
       model,
     };
   }
