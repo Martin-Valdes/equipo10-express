@@ -9,6 +9,10 @@ export interface LlmCompletionResult {
   model: string;
 }
 
+interface ILLMReponse {
+  choices: { message: { content: string } }[];
+}
+
 @Injectable()
 export class LlmApiService {
   constructor(
@@ -30,7 +34,7 @@ export class LlmApiService {
       ],
       temperature: 0.7,
     };
-    const response = await this.apiAxios.post(
+    const response = await this.apiAxios.post<ILLMReponse>(
       '/featherless-ai/v1/chat/completions',
       payload,
     );
@@ -38,8 +42,7 @@ export class LlmApiService {
     if (!response.data.choices) {
       throw new Error('Error con la conexion a la AI');
     }
-    const llmResponseContent = response.data.choices[0].message
-      .content as string;
+    const llmResponseContent = response.data.choices[0].message.content;
     // const rawApiResponse = response.data;
     const model = payload.model;
 

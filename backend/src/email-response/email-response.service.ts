@@ -26,7 +26,7 @@ export class EmailResponseService {
     const { prompt, clientEmail } = createEmailResponseDto;
     const client = await this.clientRepository.findOne({
       where: { email: clientEmail },
-      relations: { emailResponses: true },
+      // relations: { emailResponses: true },
     });
     if (!client) {
       throw new NotFoundException('Email no valido. El cliente no existe');
@@ -71,7 +71,12 @@ export class EmailResponseService {
     return emailReponse;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} emailResponse`;
+  async remove(id: number) {
+    const emailResponse = await this.emailResponseRepository.findOneBy({ id });
+    if (!emailResponse) {
+      throw new NotFoundException('El email que intentas eliminar no existe');
+    }
+    await this.emailResponseRepository.remove(emailResponse);
+    return { message: 'Eliminado correctamente', status: 200 };
   }
 }
