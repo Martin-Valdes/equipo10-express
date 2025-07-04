@@ -83,7 +83,7 @@ Herramientas de QA:
 | Backend	| Fernando Martin Valdes	| | LinkedIn Jeremías	| GitHub Jeremías
 | Backend	| Jhonatan Mustiola	| | LinkedIn Jonathan	| GitHub Jonathan
 | Data Analyst | Diego Borges Salces | ![Diego Borges_1](https://github.com/user-attachments/assets/56b008ee-aa16-406d-b8a8-56e25311f0d7)
- | LinkedIn Diego | Github Diego
+ | www.linkedin.com/in/diego-silvestre-borges-salces | Github Diego
 
 🐞 Instalación y ejecución del proyecto:
 
