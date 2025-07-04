@@ -78,8 +78,9 @@ DATOS DEL CLIENTE
 - SEGMENTO: ${client.segment}
 `;
 
-    const foot = 'No agregues notas adicionales, sugerencias o solicitud de feedback. Solo responde con el mensaje de respuesta al cliente. No uses markdown ni cualquier otro formato de texto enriquecido, solo texto plano con saltos de linea.'
-    const enrichedPrompt = `${head}\n${goals}\n${body}\n${clientData}`;
+    const foot =
+      'No agregues notas adicionales, sugerencias o solicitud de feedback. Solo responde con el mensaje de respuesta al cliente. No uses markdown ni cualquier otro formato de texto enriquecido, solo texto plano con saltos de linea.';
+    const enrichedPrompt = `${head}\n${goals}\n${body}\n${clientData}\n${foot}`;
     return enrichedPrompt;
   }
 }
