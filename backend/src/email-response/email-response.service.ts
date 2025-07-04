@@ -24,8 +24,9 @@ export class EmailResponseService {
     createEmailResponseDto: CreateEmailResponseDto,
   ): Promise<EmailResponse> {
     const { prompt, clientEmail } = createEmailResponseDto;
-    const client = await this.clientRepository.findOneBy({
-      email: clientEmail,
+    const client = await this.clientRepository.findOne({
+      where: { email: clientEmail },
+      relations: { emailResponses: true },
     });
     if (!client) {
       throw new NotFoundException('Email no valido. El cliente no existe');
@@ -33,7 +34,7 @@ export class EmailResponseService {
     try {
       const { llmResponseContent, model } = await this.llmService.askLLM(
         prompt,
-        '',
+        client,
       );
       const emailResponse = this.emailResponseRepository.create({
         content: llmResponseContent,
