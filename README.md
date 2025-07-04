@@ -101,9 +101,11 @@ Requerimientos y Objetivos del proyecto:
 
 Historias de Usuario y Criterios de Aceptación:
 
+https://docs.google.com/document/d/1pl2JNATGfK_Cgm5ne-GAdrsmUhJMAs0Pqq6qpIyKFCY/edit?usp=drive_link
 
 Casos de Prueba:
 
+https://docs.google.com/spreadsheets/d/1YCzARk1z_3T2GJYLm9PcDyIGrJjBWxsQ/edit?usp=drive_link&ouid=114968252458563670851&rtpof=true&sd=true
 
 🎨 Evidencia UX/UI
 
