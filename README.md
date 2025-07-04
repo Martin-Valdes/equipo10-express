@@ -50,11 +50,19 @@ Herramientas de Gestión y Diseño:
 
 Frontend:
 
-. 
+. TypeScript: Lenguaje de programación de código abierto desarrollado por Microsoft. Es un superconjunto de JavaScript, lo que significa que todo código JavaScript válido también es código TypeScript válido, pero TypeScript añade características adicionales, principalmente tipado estático opcional.
+
+. React: Biblioteca de JavaScript de código abierto, desarrollada por Facebook para construir interfaces de usuario interactivas. Se centra en facilitar la creación de componentes reutilizables que pueden ser combinados para construir aplicaciones web complejas. 
+
+. Next.JS: Framework de código abierto basado en React, diseñado para construir aplicaciones web y sitios web con alto rendimiento y escalabilidad.
+
+. Talwind CSS: Framework CSS "utility-first" que proporciona un conjunto de clases predefinidas de bajo nivel para construir interfaces de usuario directamente en el HTML.
 
 Backend:
 
-. 
+. NestJS: Framework progresivo de Node.js para construir aplicaciones eficientes y escalables del lado del servidor.
+
+. Supabase: Plataforma de desarrollo Backend como Servicio (BaaS) de código abierto, que proporciona herramientas para construir aplicaciones web y móviles.
 
 UX/UI:
 
@@ -66,14 +74,16 @@ Herramientas de QA:
 
 💪🏻Equipo de trabajo
 
-Rol	Nombre	Foto	Perfil de LinkedIn	Perfil de GitHub
-QA Tester	Arnoldo Felce		LinkedIn Arnoldo	GitHub Arnoldo
-Frontend	Christian Aránguiz	LinkedIn Christian	GitHub Christian
-UX/UI   	Lourdes Paloma Herrera	LinkedIn Lourdes	GitHub Lourdes
-UX/UI   	Daiana Rodriguez	LinkedIn Daiana	GitHub Daiana
-Backend	Fernando Martin Valdes	LinkedIn Jeremías	GitHub Jeremías
-Backend	Jhonatan Mustiola	LinkedIn Jonathan	GitHub Jonathan
-Data Analyst    Diego Borges Salces           LinkedIn Diego      Github Diego
+| Rol       | Nombre        | Foto                                                                                                                                                                           | Perfil de LinkedIn                                                                       | Perfil de GitHub                                 |
+| --------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| QA Tester | Arnoldo Felce | <img src="https://github.com/user-attachments/assets/189f0c8b-86d6-4664-954d-3d208fd556fe" alt="Bordes redondeados de la imagen"  style="border-radius: 30px; width: 395px ;"> |
+| Frontend | Christian Aránguiz |  | 	LinkedIn Christian	GitHub Christian
+| UX/UI | Lourdes Paloma Herrera | | LinkedIn Lourdes	| GitHub Lourdes
+| UX/UI | Daiana Rodriguez | | LinkedIn Daiana	| GitHub Daiana
+| Backend	| Fernando Martin Valdes	| | LinkedIn Jeremías	| GitHub Jeremías
+| Backend	| Jhonatan Mustiola	| | LinkedIn Jonathan	| GitHub Jonathan
+| Data Analyst | Diego Borges Salces | ![Diego Borges_1](https://github.com/user-attachments/assets/56b008ee-aa16-406d-b8a8-56e25311f0d7)
+ | LinkedIn Diego | Github Diego
 
 🐞 Instalación y ejecución del proyecto:
 
