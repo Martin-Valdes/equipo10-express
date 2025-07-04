@@ -1,41 +1,30 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { EmailResponseService } from './email-response.service';
 import { CreateEmailResponseDto } from './dto/create-email-response.dto';
-import { UpdateEmailResponseDto } from './dto/update-email-response.dto';
 
 @Controller('email-response')
 export class EmailResponseController {
   constructor(private readonly emailResponseService: EmailResponseService) {}
 
   @Post()
-  create(@Body() createEmailResponseDto: CreateEmailResponseDto) {
-    return this.emailResponseService.create(createEmailResponseDto);
+  async create(@Body() createEmailResponseDto: CreateEmailResponseDto) {
+    const emailResponse = await this.emailResponseService.create(
+      createEmailResponseDto,
+    );
+    return {
+      content: emailResponse.content,
+      id: emailResponse.id,
+    };
   }
 
   @Get()
-  findAll() {
-    return this.emailResponseService.findAll();
+  async findAll() {
+    return await this.emailResponseService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.emailResponseService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateEmailResponseDto: UpdateEmailResponseDto,
-  ) {
-    return this.emailResponseService.update(+id, updateEmailResponseDto);
+  async findOne(@Param('id') id: string) {
+    return await this.emailResponseService.findOne(+id);
   }
 
   @Delete(':id')

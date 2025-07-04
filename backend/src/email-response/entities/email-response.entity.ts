@@ -21,8 +21,18 @@ export class EmailResponse {
   @Column({
     type: 'varchar',
     length: 20,
+    nullable: true,
   })
   tag: string;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+  })
+  model: string;
+
+  @Column({ type: 'text' })
+  prompt: string;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

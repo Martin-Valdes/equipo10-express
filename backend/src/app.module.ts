@@ -6,7 +6,6 @@ import { EmailResponseModule } from './email-response/email-response.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ClientModule } from './client/client.module';
-import { ClientService } from './client/client.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,6 +19,6 @@ import { ClientService } from './client/client.service';
     ClientModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ClientService],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -1,0 +1,18 @@
+POST http://localhost:3000/email-response HTTP/1.1
+Content-Type: application/json
+
+{
+    "clientEmail": "asdassparker@gmail.com",
+    "prompt": "Haz una respuesta ficticia de email al siguiente mensaje: Hola, estoy interasado en adquirir sus servicios de ventas de bienes raices. Como puedo saber mas?"
+}
+
+###
+GET http://localhost:3000/email-response HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:3000/email-response/1 HTTP/1.1
+Content-Type: application/json
+
+###
+DELETE http://localhost:3000/email-response/1 HTTP/1.1
