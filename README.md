@@ -15,7 +15,7 @@ Los usuarios podrán registrarse en forma segura, accediendo de entrada al modo 
 
 Los administradores son los dueños de la plataforma y tienen acceso a todas las funcionalidades de administración y gestión de esta; como son: Gestión de usuarios y contenido, configuración de la plataforma, supervisión de las transacciones y estadísticas y soporte y resolución de problemas.
 
-La aplicación, construida con tecnologías web modernas, garantiza un rendimiento óptimo y una experiencia fluida. Se implementan medidas de seguridad robustas para proteger la información de los usuarios. El diseño será responsivo y optimizsado. Un equipo de soporte técnico mantiene la operatividad de la plataforma. Con un enfoque en la centralización de recursos y soporte global, EasymAIl marcará un nuevo estándar en la rapidez en respuestas asertivas a los correos recibidos de sus clientes, ayudando a la comunidad y asegurando una experiencia eficiente y sin complicaciones.
+La aplicación, construida con tecnologías web modernas, garantiza un rendimiento óptimo y una experiencia fluida. Se implementan medidas de seguridad robustas para proteger la información de los usuarios. El diseño será responsivo y optimizsado. Un equipo de soporte técnico mantiene la operatividad de la plataforma. Con un enfoque en la centralización de recursos y soporte global, EasyemAIl marcará un nuevo estándar en la rapidez en respuestas asertivas a los correos recibidos de sus clientes, ayudando a la comunidad y asegurando una experiencia eficiente y sin complicaciones.
 
 🎯 Objetivo del proyecto
 
