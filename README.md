@@ -80,7 +80,7 @@ Herramientas de QA:
 | Frontend | Christian Aránguiz |  | 	[LinkedIn Christian]	| [GitHub Christian]
 | UX/UI | Lourdes Paloma Herrera | | [LinkedIn Lourdes]	| [GitHub Lourdes]
 | UX/UI | Daiana Rodriguez | | [LinkedIn Daiana]	| [GitHub Daiana]
-| Backend	| Fernando Martin Valdes	| [Fernando Martin Valdes](https://github.com/user-attachments/assets/f566bf2c-a3b1-4011-b839-09007fcac88f) | [LinkedIn Fernando](https://www.linkedin.com/in/fernandomartinvaldes?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)	| [GitHub Fernando]
+| Backend	| Fernando Martin Valdes	| ![Fernando Martin Valdes](https://github.com/user-attachments/assets/371c5ee0-9a48-4a1e-ab25-1872be1da359) | [LinkedIn Fernando](https://www.linkedin.com/in/fernandomartinvaldes?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)	| [GitHub Fernando]
 | Backend	| Jhonatan Mustiola	| ![Jhonatan Mustiola](https://github.com/user-attachments/assets/7445f73e-b424-40bd-b514-14e774934988) | [LinkedIn Jonathan](https://www.linkedin.com/in/jhonatan-mustiola)	| [GitHub Jonathan](https://www.github.com/jmustiola)
 | Data Analyst | Diego Borges Salces | ![Diego Borges_1](https://github.com/user-attachments/assets/56b008ee-aa16-406d-b8a8-56e25311f0d7) | [LinkedIn Diego](https://www.linkedin.com/in/diego-silvestre-borges-salces) | [Github Diego](https://github.com/Atlaros)
 
