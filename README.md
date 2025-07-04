@@ -119,9 +119,16 @@ https://www.figma.com/design/03CvwT9J6kg8GlvwcHjzGs/AI-Emails?node-id=1-7&p=f&t=
 Sitio web desplegado del proyecto
 
 
+
+Evidencia Frontend:
+
+
 🐞 Evidencia Backend:
 
 Api desplegada
 
 
 Documentacion de la api
+
+
+📊 Evidencia Data Science:
