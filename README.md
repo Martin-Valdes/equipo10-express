@@ -1,6 +1,7 @@
 # equipo10-express
 
-EasymAIl
+![image](https://github.com/user-attachments/assets/8e17c644-bf5b-43ae-9e0b-fdc5778e9451)
+
 
 
 
