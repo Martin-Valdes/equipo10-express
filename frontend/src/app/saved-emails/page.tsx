@@ -23,7 +23,7 @@ export default function SavedEmails() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch("https://easyemail-api.onrender.com/email-response");
+        const res = await fetch("https://easyemail-api.onrender.com/email-response/2");
         if (!res.ok) throw new Error("No se pudo obtener el email guardado");
         const data = await res.json();
         // Map API response to SavedEmail[]
