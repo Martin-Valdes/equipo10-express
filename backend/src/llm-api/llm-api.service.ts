@@ -11,8 +11,8 @@ export interface LlmCompletionResult {
 }
 
 interface ILLMResponse {
-  choices: { 
-    message: { 
+  choices: {
+    message: {
       content: string;
       role: string;
     };
@@ -39,7 +39,9 @@ export class LlmApiService implements OnModuleInit {
   onModuleInit() {
     const apiKey = this.configService.get<string>('MISTRAL_API_KEY');
     if (!apiKey) {
-      throw new Error('MISTRAL_API_KEY no está configurada en las variables de entorno');
+      throw new Error(
+        'MISTRAL_API_KEY no está configurada en las variables de entorno',
+      );
     }
     this.mistralApiKey = apiKey;
     this.logger.debug(`API Key cargada: ***${this.mistralApiKey.slice(-4)}`);
@@ -66,20 +68,23 @@ export class LlmApiService implements OnModuleInit {
 
     try {
       this.logger.log(`Enviando prompt a LLM para cliente ${client.email}`);
-      
+
       const response = await this.apiAxios.post<ILLMResponse>(
         'https://api.mistral.ai/v1/chat/completions',
         payload,
         {
           headers: {
-            'Authorization': `Bearer ${this.mistralApiKey}`,
+            Authorization: `Bearer ${this.mistralApiKey}`,
             'Content-Type': 'application/json',
           },
-        }
+        },
       );
 
       if (!response.data?.choices?.[0]?.message?.content) {
-        this.logger.error('Estructura de respuesta inválida de la API LLM', response.data);
+        this.logger.error(
+          'Estructura de respuesta inválida de la API LLM',
+          response.data,
+        );
         throw new Error('Respuesta inválida de la API LLM');
       }
 
@@ -93,7 +98,9 @@ export class LlmApiService implements OnModuleInit {
         error: error.response?.data || error.message,
         payload,
       });
-      throw new Error(`Error en la API LLM: ${error.response?.data?.message || error.message}`);
+      throw new Error(
+        `Error en la API LLM: ${error.response?.data?.message || error.message}`,
+      );
     }
   }
 
