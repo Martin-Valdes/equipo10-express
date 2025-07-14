@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ClientModule } from './client/client.module';
 
+import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,6 +20,7 @@ import { ClientModule } from './client/client.module';
     }),
     EmailResponseModule,
     ClientModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

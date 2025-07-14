@@ -20,4 +20,5 @@ export const typeOrmConfig = (
       rejectUnauthorized: false,
     },
   },
+  
 });
