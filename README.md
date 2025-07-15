@@ -91,6 +91,7 @@ https://github.com/Martin-Valdes/express-e10.git
 
 🐞 Evidencia Cliente
 
+https://gamma.app/docs/Descubre-como-generar-correos-automaticos-personalizados-y-efecti-nlxqrupaavvnjx8?mode=doc
 
 Requerimientos y Objetivos del proyecto:
 
@@ -127,7 +128,7 @@ Evidencia Frontend:
 
 Api desplegada
 
-
+https://easyemail-api.onrender.com/api
 Documentacion de la api
 
 
