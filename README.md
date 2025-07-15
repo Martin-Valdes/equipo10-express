@@ -118,7 +118,7 @@ https://www.figma.com/design/03CvwT9J6kg8GlvwcHjzGs/AI-Emails?node-id=1-7&p=f&t=
 
 Sitio web desplegado del proyecto
 
-
+https://easy-email-ai.vercel.app/dashboard
 
 Evidencia Frontend:
 
