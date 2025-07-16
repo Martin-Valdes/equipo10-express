@@ -6,8 +6,8 @@ import { EmailResponseModule } from './email-response/email-response.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ClientModule } from './client/client.module';
-
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,6 +21,7 @@ import { UsersModule } from './users/users.module';
     EmailResponseModule,
     ClientModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

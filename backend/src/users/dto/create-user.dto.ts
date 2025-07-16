@@ -38,6 +38,13 @@ export class CreateUserDto {
   @MaxLength(20, {
     message: 'La contraseña no puede tener más de 20 caracteres.',
   })
-  password: string;
+  password?: string;
+  @IsString()
+  @IsOptional()
+  googleId?: string;
+
+  @IsString()
+  @IsOptional()
+  isVerified?: boolean;
 
 }

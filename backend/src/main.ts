@@ -8,7 +8,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3001', // Frontend Next.js
-      'https://tu-frontend-produccion.com', // En producción
+      'https://jira.ute.com.uy:8443/secure/RapidBoard.jspa?rapidView=763&view=planning&selectedIssue=UTETC-70967&issueLimit=100#', // En producción
     ],
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: [
@@ -16,6 +16,7 @@ async function bootstrap() {
       'Authorization',
       'X-Requested-With',
       'Accept',
+      'Origin',
     ],
     credentials: true,
     preflightContinue: false,
