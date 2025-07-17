@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [isSending, setIsSending] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
+  console.log(process.env.NEXT_PUBLIC_API_URL);
   const topics = [
     "Seguimiento",
     "Contenido útil",
@@ -38,11 +39,13 @@ export default function Dashboard() {
   ];
 
   const toggleSelection = (
+    
     item: string,
     selectedItems: string[],
     setSelectedItems: (items: string[]) => void
   ) => {
     if (selectedItems.includes(item)) {
+      console.log(process.env.NEXT_PUBLIC_API_URL)
       setSelectedItems(selectedItems.filter((i) => i !== item));
     } else {
       setSelectedItems([...selectedItems, item]);
@@ -51,6 +54,7 @@ export default function Dashboard() {
 
   const generateEmail = async () => {
     // Validate required fields
+    console.log(process.env.NEXT_PUBLIC_API_URL);
     if (!recipient.trim()) {
       setError("Por favor, especifica para quién es este email");
       return;
@@ -81,7 +85,7 @@ export default function Dashboard() {
         prompt += ` Esto es en respuesta al siguiente email: "${originalEmailText}"`;
       }
 
-      const response = await fetch('https://easyemail-api.onrender.com/email-response', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/email-response`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,6 +101,7 @@ export default function Dashboard() {
       }
 
       const data = await response.json();
+
       setGeneratedEmail(data.content || 'Email generado exitosamente');
     } catch (err) {
       console.error('Error generating email:', err);

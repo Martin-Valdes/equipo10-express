@@ -32,14 +32,19 @@ export class AuthService {
 
   async findOrCreateGoogleUser(googleUser: {
     googleId: string;
-    email: string;
-    name: string;
+    emails: string;
+    givenName: string;
+    familyName: string;
   }) {
-    let user = await this.usersService.findOrCreateGoogleUser(googleUser);
+    let user = await this.usersService.findOrCreateGoogleUser({
+      googleId: googleUser.googleId,
+      email: googleUser.emails,
+      name: `${googleUser.givenName} ${googleUser.familyName}`,
+    });
 
     if (user) return user;
 
-    const foundUser = await this.usersService.findOneByEmail(googleUser.email);
+    const foundUser = await this.usersService.findOneByEmail(googleUser.emails);
 
     if (foundUser) {
       foundUser.googleId = googleUser.googleId;
@@ -51,9 +56,9 @@ export class AuthService {
 
     return this.usersService.create({
       googleId: googleUser.googleId,
-      email: googleUser.email,
-      lastName: googleUser.name,
-      firstName: googleUser.name,
+      email: googleUser.emails,
+      lastName: googleUser.familyName,
+      firstName: googleUser.givenName,
       isVerified: true,
     });
   }

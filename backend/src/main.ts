@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
     origin: [
-      'http://localhost:3001', // Frontend Next.js
-      'https://jira.ute.com.uy:8443/secure/RapidBoard.jspa?rapidView=763&view=planning&selectedIssue=UTETC-70967&issueLimit=100#', // En producción
+      'http://localhost:3001', 
+      'https://easy-email-ai.vercel.app/dashboard', 
     ],
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: [
