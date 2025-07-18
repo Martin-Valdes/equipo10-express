@@ -77,7 +77,7 @@ Herramientas de QA:
 | Rol       | Nombre        | Foto                                                                                                                                                                           | Perfil de LinkedIn                                                                       | Perfil de GitHub                                 |
 | --------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------ |
 | QA Tester | Arnoldo Felce | <img src="https://github.com/user-attachments/assets/189f0c8b-86d6-4664-954d-3d208fd556fe" alt="Bordes redondeados de la imagen"  style="border-radius: 30px; width: 395px ;"> | [LinkedIn Arnoldo](https://www.linkedin.com/in/arnoldo-felce-rondón) | [GitHub Arnoldo](https://github.com/afelce) |
-| Frontend | Christian Aránguiz |  | 	[LinkedIn Christian]	| [GitHub Christian]
+| Frontend | Christian Aránguiz | ![Christian Aranguiz](https://github.com/user-attachments/assets/e229abe6-9d7f-46d1-8fc8-2fb27cdf3acb) | 	[LinkedIn Christian](https://www.linkedin.com/in/christian-aranguiz/)	| [GitHub Christian](https://github.com/NikoDemo96)
 | UX/UI | Lourdes Paloma Herrera | ![Paloma Herrera](https://github.com/user-attachments/assets/4308d748-7946-476e-9c20-feca3cf9b667) | [LinkedIn Paloma](https://www.linkedin.com/in/lourdes-paloma-herrera-4a44021a2)	| [GitHub Paloma](https://github.com/PalomaHerrera)
 | UX/UI | Daiana Rodriguez | ![Daiana Rodriguez_1](https://github.com/user-attachments/assets/9b253c32-d858-4e62-9809-7161acae9eb1) | [LinkedIn Daiana](https://www.linkedin.com/in/daiana-rodr%C3%ADguez-377590167?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)	| [GitHub Daiana](https://github.com/daianar567)
 | Backend	| Fernando Martin Valdes	| ![Fernando Martin Valdes](https://github.com/user-attachments/assets/371c5ee0-9a48-4a1e-ab25-1872be1da359) | [LinkedIn Fernando](https://www.linkedin.com/in/fernandomartinvaldes?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)	| [GitHub Fernando](https://github.com/Martin-Valdes)
@@ -91,6 +91,7 @@ https://github.com/Martin-Valdes/express-e10.git
 
 🐞 Evidencia Cliente
 
+https://gamma.app/docs/Descubre-como-generar-correos-automaticos-personalizados-y-efecti-nlxqrupaavvnjx8?mode=doc
 
 Requerimientos y Objetivos del proyecto:
 
@@ -118,7 +119,7 @@ https://www.figma.com/design/03CvwT9J6kg8GlvwcHjzGs/AI-Emails?node-id=1-7&p=f&t=
 
 Sitio web desplegado del proyecto
 
-
+https://easy-email-ai.vercel.app/dashboard
 
 Evidencia Frontend:
 
@@ -127,8 +128,9 @@ Evidencia Frontend:
 
 Api desplegada
 
-
 Documentacion de la api
+
+https://easyemail-api.onrender.com/api
 
 
 📊 Evidencia Data Science:

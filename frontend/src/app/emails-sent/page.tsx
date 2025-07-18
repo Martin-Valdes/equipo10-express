@@ -1,5 +1,6 @@
 "use client"
-
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    
 import { Trash2, Star } from "lucide-react"
 import Sidebar from "@/components/Sidebar/Sidebar"
 import { useEffect, useState } from "react"
@@ -22,7 +23,7 @@ export default function EmailsSent() {
       setLoading(true)
       setError("")
       try {
-        const res = await fetch("https://easyemail-api.onrender.com/email-response")
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/email-response`)
         if (!res.ok) throw new Error("No se pudo obtener los emails enviados")
         const data = await res.json()
         // Map API response to SentEmail[]
