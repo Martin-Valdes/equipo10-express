@@ -29,7 +29,7 @@ export default function EmailsSent() {
         const mapped: SentEmail[] = (Array.isArray(data) ? data : []).map((item: any) => ({
           id: String(item.id),
           recipient: item.client?.email || "",
-          subject: item.tag || "(Sin asunto)",
+          subject: item.content.split('\n')[0].trim().replace('Asunto:', '') || "(Sin asunto)",
           body: item.content || "",
           isFavorite: false,
           sentDate: item.createdAt || undefined,
@@ -114,7 +114,7 @@ export default function EmailsSent() {
                   {/* Body */}
                   <div>
                     <span className="text-orange-500 font-medium text-sm block mb-2">Cuerpo:</span>
-                    <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">{email.body}</div>
+                    <div className="text-gray-400 text-sm leading-relaxed whitespace-pre-line">{email.body.slice(0, 300)}...</div>
                   </div>
                 </div>
               </div>

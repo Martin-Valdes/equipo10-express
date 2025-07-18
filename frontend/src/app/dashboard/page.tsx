@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Upload, Trash2, Copy, Bookmark } from "lucide-react";
 import Sidebar from "@/components/Sidebar/Sidebar";
 
@@ -15,6 +15,7 @@ export default function Dashboard() {
   const [replyToSpecific, setReplyToSpecific] = useState(false);
   const [originalEmailText, setOriginalEmailText] = useState("");
   const [generatedEmail, setGeneratedEmail] = useState("");
+  const [streamEmail, setStreamEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -55,7 +56,7 @@ export default function Dashboard() {
       setError("Por favor, especifica para quién es este email");
       return;
     }
-    
+
     if (!message.trim()) {
       setError("Por favor, ingresa el mensaje que querés enviar");
       return;
@@ -70,13 +71,13 @@ export default function Dashboard() {
       let prompt = `Genera un email ${selectedTones.length > 0 ? `con tono ${selectedTones.join(', ')} ` : ''}`;
       prompt += `${selectedTopics.length > 0 ? `sobre ${selectedTopics.join(', ')} ` : ''}`;
       prompt += `para ${recipient}. `;
-      
+
       if (subject.trim()) {
         prompt += `El asunto debe ser: "${subject}". `;
       }
-      
+
       prompt += `El mensaje principal es: ${message}`;
-      
+
       if (replyToSpecific && originalEmailText.trim()) {
         prompt += ` Esto es en respuesta al siguiente email: "${originalEmailText}"`;
       }
@@ -114,9 +115,13 @@ export default function Dashboard() {
       {/* Main Content */}
       <div className="flex-1 flex">
         <div className="flex-1 p-8">
-          <h1 className="text-3xl font-semibold text-blue-800 mb-8 text-center">
-            Dashboard
-          </h1>
+          <div className="flex justify-center mb-8">
+            <img
+              className="h-[100px] w-[500px] object-cover text-center mb-6"
+              src={`https://github.com/user-attachments/assets/8e17c644-bf5b-43ae-9e0b-fdc5778e9451`}
+              alt="EasyEmail Logo"
+            />
+          </div>
 
           <div className="max-w-4xl mx-auto space-y-8">
             {/* Email Topic Section */}
@@ -131,11 +136,10 @@ export default function Dashboard() {
                     onClick={() =>
                       toggleSelection(topic, selectedTopics, setSelectedTopics)
                     }
-                    className={`px-4 py-2 rounded-full border text-sm font-medium transition-colors ${
-                      selectedTopics.includes(topic)
+                    className={`px-4 py-2 rounded-full border text-sm font-medium transition-colors ${selectedTopics.includes(topic)
                         ? "bg-blue-100 border-blue-300 text-blue-700"
                         : "bg-white border-gray-300 text-gray-700 hover:border-blue-300 hover:text-blue-600"
-                    }`}
+                      }`}
                   >
                     {topic}
                   </button>
@@ -155,11 +159,10 @@ export default function Dashboard() {
                     onClick={() =>
                       toggleSelection(tone, selectedTones, setSelectedTones)
                     }
-                    className={`px-4 py-2 rounded-full border text-sm font-medium transition-colors ${
-                      selectedTones.includes(tone)
+                    className={`px-4 py-2 rounded-full border text-sm font-medium transition-colors ${selectedTones.includes(tone)
                         ? "bg-blue-100 border-blue-300 text-blue-700"
                         : "bg-white border-gray-300 text-gray-700 hover:border-blue-300 hover:text-blue-600"
-                    }`}
+                      }`}
                   >
                     {tone}
                   </button>
@@ -217,14 +220,12 @@ export default function Dashboard() {
                 </span>
                 <button
                   onClick={() => setReplyToSpecific(!replyToSpecific)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    replyToSpecific ? "bg-orange-500" : "bg-gray-300"
-                  }`}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${replyToSpecific ? "bg-orange-500" : "bg-gray-300"
+                    }`}
                 >
                   <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      replyToSpecific ? "translate-x-6" : "translate-x-1"
-                    }`}
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${replyToSpecific ? "translate-x-6" : "translate-x-1"
+                      }`}
                   />
                 </button>
               </div>
@@ -252,14 +253,13 @@ export default function Dashboard() {
 
             {/* Generate Button */}
             <div className="flex justify-end">
-              <button 
+              <button
                 onClick={generateEmail}
                 disabled={isLoading}
-                className={`px-8 py-3 rounded-full font-medium transition-colors ${
-                  isLoading 
-                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed' 
+                className={`px-8 py-3 rounded-full font-medium transition-colors ${isLoading
+                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
                     : 'bg-blue-600 text-white hover:bg-blue-700'
-                }`}
+                  }`}
               >
                 {isLoading ? 'Generando...' : 'Generar Email'}
               </button>
@@ -276,41 +276,38 @@ export default function Dashboard() {
                 </div>
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-3">
-                    <button 
+                    <button
                       onClick={() => setGeneratedEmail('')}
                       disabled={!generatedEmail}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        generatedEmail 
-                          ? 'text-blue-600 border border-blue-600 hover:bg-blue-50' 
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${generatedEmail
+                          ? 'text-blue-600 border border-blue-600 hover:bg-blue-50'
                           : 'text-gray-400 border border-gray-300 cursor-not-allowed'
-                      }`}
+                        }`}
                     >
                       <Trash2 size={16} />
                       <span>Eliminar</span>
                     </button>
-                    <button 
+                    <button
                       onClick={() => {
                         if (generatedEmail) {
                           navigator.clipboard.writeText(generatedEmail);
                         }
                       }}
                       disabled={!generatedEmail}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        generatedEmail 
-                          ? 'text-blue-600 border border-blue-600 hover:bg-blue-50' 
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${generatedEmail
+                          ? 'text-blue-600 border border-blue-600 hover:bg-blue-50'
                           : 'text-gray-400 border border-gray-300 cursor-not-allowed'
-                      }`}
+                        }`}
                     >
                       <Copy size={16} />
                       <span>Copiar</span>
                     </button>
                     <button
                       disabled={!generatedEmail}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        generatedEmail
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${generatedEmail
                           ? 'text-blue-600 border border-blue-600 hover:bg-blue-50'
                           : 'text-gray-400 border border-gray-300 cursor-not-allowed'
-                      }`}
+                        }`}
                       onClick={() => {
                         setShowSaveNotification(true);
                         setGeneratedEmail("");
