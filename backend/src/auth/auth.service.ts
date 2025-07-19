@@ -26,25 +26,30 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
     return {
-      acessTocken: this.jwtService.sign({ id: user.id }),
+      acessTocken: this.jwtService.sign({ 
+        id: user.id,
+        email: user.email,
+        name: `${user.firstName} ${user.lastName}`,
+        googleId: user.googleId || null,
+       }),
     };
   }
 
   async findOrCreateGoogleUser(googleUser: {
     googleId: string;
-    emails: string;
-    givenName: string;
-    familyName: string;
+    email: string;
+    firstName: string;
+    lastName: string;
   }) {
     let user = await this.usersService.findOrCreateGoogleUser({
       googleId: googleUser.googleId,
-      email: googleUser.emails,
-      name: `${googleUser.givenName} ${googleUser.familyName}`,
+      email: googleUser.email,
+      name: googleUser.firstName,
     });
 
     if (user) return user;
 
-    const foundUser = await this.usersService.findOneByEmail(googleUser.emails);
+    const foundUser = await this.usersService.findOneByEmail(googleUser.email);
 
     if (foundUser) {
       foundUser.googleId = googleUser.googleId;
@@ -56,9 +61,9 @@ export class AuthService {
 
     return this.usersService.create({
       googleId: googleUser.googleId,
-      email: googleUser.emails,
-      lastName: googleUser.familyName,
-      firstName: googleUser.givenName,
+      email: googleUser.email,
+      lastName: googleUser.lastName,
+      firstName: googleUser.firstName,
       isVerified: true,
     });
   }

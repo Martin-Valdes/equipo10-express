@@ -43,8 +43,13 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response
   ) {
     try {
-      const token = await this.jwtService.signAsync(req.user);
-      console.log(token);
+      const user = await this.authService.findOrCreateGoogleUser(req.user);
+
+      const token = await this.jwtService.signAsync({
+        id: user.googleId,
+        email: user.email,
+        name: user.firstName,
+       });
       res
         .cookie('access_token', token, {
           httpOnly: true,

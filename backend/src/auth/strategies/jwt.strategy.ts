@@ -5,6 +5,8 @@ import { UsersService } from '../../users/users.service';
 
 export type JwtPayload = {
   id: string;
+  email: string;
+  name: string;
 };
 
 @Injectable()
@@ -23,7 +25,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     if (!user) {
       throw new UnauthorizedException();
     }
-    console.log(user);
     return user;
   }
 }
