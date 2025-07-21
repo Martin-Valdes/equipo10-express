@@ -15,23 +15,51 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
+  async register(
+    email: string,
+    password: string,
+    lastName: string,
+    firstName: string
+  ) {
+    const existUser = await this.usersService.findOneByEmail(email);
+
+    if (existUser) {
+      throw new NotFoundException(`User with email ${email} alredy exist`);
+    }
+
+    const createUser = await this.usersService.create({
+      email,
+      password,
+      lastName,
+      firstName,
+    });
+
+    return createUser;
+  }
+
   async login(email: string, password: string): Promise<AuthEntity> {
     const user = await this.usersService.findOneByEmail(email);
+
+    if (user?.googleId) {
+      throw new UnauthorizedException(
+        'This user has logged in with Google, please use Google login'
+      );
+    }
+
     if (!user) {
       throw new NotFoundException(`User with email ${email} not found`);
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Invalid password');
     }
     return {
-      acessTocken: this.jwtService.sign({ 
+      accessTocken: this.jwtService.sign({
         id: user.id,
         email: user.email,
         name: `${user.firstName} ${user.lastName}`,
-        googleId: user.googleId || null,
-       }),
+      }),
     };
   }
 
