@@ -7,6 +7,7 @@ export type JwtPayload = {
   id: string;
   email: string;
   name: string;
+  roles: string;
 };
 
 @Injectable()
@@ -25,6 +26,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     if (!user) {
       throw new UnauthorizedException();
     }
-    return user;
+    return {
+    id: payload.id,
+    email: payload.email,
+    roles: payload.roles || ['user'] // 👈 Asegura que siempre haya roles
+  };
   }
 }

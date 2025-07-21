@@ -60,7 +60,7 @@ export class UsersService {
   async findAll() {
     try {
       const users = await this.userRepository.find();
-
+console.log("object")
       return users;
     } catch (error) {
       if (error instanceof ConflictException) {
