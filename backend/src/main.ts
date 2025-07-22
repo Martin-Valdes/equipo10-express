@@ -28,6 +28,7 @@ async function bootstrap() {
     .setDescription('Documentación de la API de EasyEmail')
     .setVersion('1.0')
     .addTag('proyectos')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'jwt')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

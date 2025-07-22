@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseGuards } from '@nestjs/common';
 import { ValidationPipe } from '@nestjs/common/pipes';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import {
   ApiBody,
   ApiOperation,
@@ -25,6 +27,8 @@ export class UsersController {
   }
 
   @Get()
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.usersService.findAll();
   }
