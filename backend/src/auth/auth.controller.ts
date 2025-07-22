@@ -10,6 +10,7 @@ import {
 import { ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.Dto';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
@@ -22,6 +23,14 @@ export class AuthController {
     private readonly configService: ConfigService,
     private jwtService: JwtService
   ) {}
+
+  @Post('register')
+  @ApiOperation({ summary: 'Iniciar sesión con email y contraseña' })
+  @ApiBody({ type: RegisterDto, description: 'Datos de registro' })
+  @ApiResponse({ status: 200, description: 'Registro exitoso' })
+  register(@Body() { email, password, lastName, firstName }: RegisterDto) {
+    return this.authService.register(email, password, lastName, firstName);
+  }
 
   @Post('login')
   @ApiOperation({ summary: 'Iniciar sesión con email y contraseña' })
@@ -49,7 +58,7 @@ export class AuthController {
         id: user.googleId,
         email: user.email,
         name: user.firstName,
-       });
+      });
       res
         .cookie('access_token', token, {
           httpOnly: true,

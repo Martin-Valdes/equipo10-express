@@ -39,6 +39,13 @@ export class Client {
 
   @Column({
     type: 'varchar',
+    default: 'user',
+    nullable: false, 
+  })
+  role: string;
+
+  @Column({
+    type: 'varchar',
     length: 200,
   })
   interests: string;

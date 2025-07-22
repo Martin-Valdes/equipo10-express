@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseGuards, ParseUUIDPipe } from '@nestjs/common';
 import { ValidationPipe } from '@nestjs/common/pipes';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,6 +12,15 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { RoleGuard } from '../auth/guards/roles.guard';
+import { Roles } from 'src/auth/decorators/roles.decorators';
+import { Role } from '../auth/roles.enum';
+
+// 
+// Import the User entity or interface
+import { User } from './entities/user.entity';
+
+type PublicUser = Omit<User, 'password'>;
 
 @ApiTags('Users')
 @Controller('users')
@@ -21,8 +30,13 @@ export class UsersController {
   @Post()
   @UsePipes(new ValidationPipe())
   @ApiOperation({ summary: 'Create user' })
-  @ApiResponse({ status: 201, description: 'User created successfully' })     
-  create(@Body() createUserDto: CreateUserDto) {
+  @ApiResponse({ 
+    status: 201, 
+    description: 'User created successfully',
+    type: User, 
+  })
+  @ApiBody({ type: CreateUserDto })
+  async create(@Body() createUserDto: CreateUserDto): Promise<PublicUser> {
     return this.usersService.create(createUserDto);
   }
 
@@ -34,17 +48,45 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @ApiParam({ name: 'id', type: String, description: 'User ID' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'User found',
+    type: User,
+  })
+  async findOne(
+    @Param('id', ParseUUIDPipe) id: string 
+  ): Promise<PublicUser> {
     return this.usersService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'User updated',
+    type: User,
+  })
+  @ApiBody({ type: UpdateUserDto })
+  async update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateUserDto: UpdateUserDto
+  ): Promise<PublicUser> {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({ 
+    status: 200,
+    description: 'User deleted',
+    schema: { 
+      example: { message: 'User deleted successfully', status: 200 }
+    }
+  })
+  async remove(
+    @Param('id', ParseUUIDPipe) id: string
+  ): Promise<{ message: string; status: number }> {
     return this.usersService.remove(id);
   }
 }

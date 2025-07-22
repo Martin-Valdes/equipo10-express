@@ -35,6 +35,13 @@ export class User {
   })
   password: string;
 
+  @Column({
+    type: 'varchar',
+    length: 100,
+    nullable: true 
+  })
+  role: string;
+
   @Column({ nullable: true })
   googleId: string;
   
