@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, UseGuards, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Request,
+  Delete,
+  UsePipes,
+  UseGuards,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { ValidationPipe } from '@nestjs/common/pipes';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,8 +28,6 @@ import { RoleGuard } from '../auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorators';
 import { Role } from '../auth/roles.enum';
 
-// 
-// Import the User entity or interface
 import { User } from './entities/user.entity';
 
 type PublicUser = Omit<User, 'password'>;
@@ -30,10 +40,10 @@ export class UsersController {
   @Post()
   @UsePipes(new ValidationPipe())
   @ApiOperation({ summary: 'Create user' })
-  @ApiResponse({ 
-    status: 201, 
+  @ApiResponse({
+    status: 201,
     description: 'User created successfully',
-    type: User, 
+    type: User,
   })
   @ApiBody({ type: CreateUserDto })
   async create(@Body() createUserDto: CreateUserDto): Promise<PublicUser> {
@@ -42,28 +52,27 @@ export class UsersController {
 
   @Get()
   @ApiBearerAuth('jwt')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
   @ApiParam({ name: 'id', type: String, description: 'User ID' })
-  @ApiResponse({ 
-    status: 200, 
+  @ApiResponse({
+    status: 200,
     description: 'User found',
     type: User,
   })
-  async findOne(
-    @Param('id', ParseUUIDPipe) id: string 
-  ): Promise<PublicUser> {
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<PublicUser> {
     return this.usersService.findOne(id);
   }
 
   @Patch(':id')
   @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ 
-    status: 200, 
+  @ApiResponse({
+    status: 200,
     description: 'User updated',
     type: User,
   })
@@ -77,12 +86,12 @@ export class UsersController {
 
   @Delete(':id')
   @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ 
+  @ApiResponse({
     status: 200,
     description: 'User deleted',
-    schema: { 
-      example: { message: 'User deleted successfully', status: 200 }
-    }
+    schema: {
+      example: { message: 'User deleted successfully', status: 200 },
+    },
   })
   async remove(
     @Param('id', ParseUUIDPipe) id: string

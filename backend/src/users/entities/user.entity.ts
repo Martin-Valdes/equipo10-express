@@ -40,7 +40,7 @@ export class User {
     length: 100,
     nullable: true 
   })
-  role: string;
+  roles: string[];
 
   @Column({ nullable: true })
   googleId: string;

@@ -7,7 +7,7 @@ export type JwtPayload = {
   id: string;
   email: string;
   name: string;
-  roles: string;
+  roles: string[];
 };
 
 @Injectable()
@@ -22,14 +22,13 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
   async validate(payload: JwtPayload) {
     const user = await this.usersService.findOne(payload.id);
-
     if (!user) {
       throw new UnauthorizedException();
     }
     return {
-    id: payload.id,
-    email: payload.email,
-    roles: payload.roles || ['user'] // 👈 Asegura que siempre haya roles
+    id: user.id,
+    email: user.email,
+    roles: user.roles || ['user'] 
   };
   }
 }

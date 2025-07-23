@@ -42,7 +42,7 @@ export class Client {
     default: 'user',
     nullable: false, 
   })
-  role: string;
+  roles: string[];
 
   @Column({
     type: 'varchar',
