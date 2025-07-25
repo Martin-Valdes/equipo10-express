@@ -72,30 +72,37 @@ export class UsersService {
     }
   }
 
+  async findOrCreateGoogleUser(googleUser: {
+    googleId: string;
+    email: string;
+    name: string;
+    roles: string[];
+  }) {
+    let user = await this.userRepository.findOne({
+      where: { googleId: googleUser.googleId },
+    });
 
-async findOrCreateGoogleUser(googleUser: { googleId: string, email: string, name: string }) {
+    if (user) return user;
 
-  let user = await this.userRepository.findOne({ where: { googleId: googleUser.googleId } });
+    user = await this.userRepository.findOne({
+      where: { email: googleUser.email },
+    });
 
-  if (user) return user;
+    if (user) {
+      user.googleId = googleUser.googleId;
+      await this.userRepository.save(user);
+      return user;
+    }
 
-  user = await this.userRepository.findOne({ where: { email: googleUser.email } });
-  
-  if (user) {
-    user.googleId = googleUser.googleId;
-    await this.userRepository.save(user);
-    return user;
+    return this.userRepository.save({
+      googleId: googleUser.googleId,
+      email: googleUser.email,
+      firstName: googleUser.name,
+      lastName: googleUser.name,
+      isVerified: true,
+      roles: googleUser.roles || ['USER'],
+    });
   }
-Repository
-
-  return this.userRepository.save({
-    googleId: googleUser.googleId,
-    email: googleUser.email,
-    firstName: googleUser.name,
-    lastName: googleUser.name,
-    isVerified: true, 
-  });
-}
 
   async findOneByEmail(email: string) {
     try {
@@ -103,7 +110,7 @@ Repository
         where: { email },
       });
       if (!user) {
-        return null; 
+        return null;
       }
 
       return user;

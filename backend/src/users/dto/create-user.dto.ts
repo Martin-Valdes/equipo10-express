@@ -1,4 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude, Expose } from 'class-transformer';
+
+
 
 import {
   IsEmail,
@@ -32,6 +35,7 @@ export class CreateUserDto {
   avatarUrl?: string;
 
   @ApiProperty()
+  @Exclude()
   @IsString({ message: 'La contraseña debe ser una cadena de texto.' })
   @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres.' })
   @MaxLength(20, {

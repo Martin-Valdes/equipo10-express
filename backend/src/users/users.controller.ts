@@ -27,7 +27,6 @@ import {
 import { RoleGuard } from '../auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorators';
 import { Role } from '../auth/roles.enum';
-
 import { User } from './entities/user.entity';
 
 type PublicUser = Omit<User, 'password'>;
@@ -38,6 +37,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   @UsePipes(new ValidationPipe())
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({
@@ -53,12 +55,15 @@ export class UsersController {
   @Get()
   @ApiBearerAuth('jwt')
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.USER)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   @ApiParam({ name: 'id', type: String, description: 'User ID' })
   @ApiResponse({
     status: 200,
@@ -70,6 +75,9 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({
     status: 200,
@@ -85,6 +93,9 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN)
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({
     status: 200,

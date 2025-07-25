@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { AuthEntity } from './entity/auth.entity';
+import { parse } from 'path/win32';
 
 @Injectable()
 export class AuthService {
@@ -19,22 +20,23 @@ export class AuthService {
     email: string,
     password: string,
     lastName: string,
-    firstName: string
+    firstName: string,
+    roles: string[] = ['USER']
   ) {
     const existUser = await this.usersService.findOneByEmail(email);
 
     if (existUser) {
       throw new NotFoundException(`User with email ${email} alredy exist`);
     }
-
-    const createUser = await this.usersService.create({
+    const createdUser = await this.usersService.create({
       email,
       password,
       lastName,
       firstName,
+      roles,
     });
 
-    return createUser;
+    return createdUser;
   }
 
   async login(email: string, password: string): Promise<AuthEntity> {
@@ -59,6 +61,7 @@ export class AuthService {
         id: user.id,
         email: user.email,
         name: `${user.firstName} ${user.lastName}`,
+        roles: user.roles || ['USER'],
       }),
     };
   }
@@ -68,11 +71,13 @@ export class AuthService {
     email: string;
     firstName: string;
     lastName: string;
+    roles: string[];
   }) {
     let user = await this.usersService.findOrCreateGoogleUser({
       googleId: googleUser.googleId,
       email: googleUser.email,
       name: googleUser.firstName,
+      roles: ['USER'],
     });
 
     if (user) return user;
@@ -93,6 +98,7 @@ export class AuthService {
       lastName: googleUser.lastName,
       firstName: googleUser.firstName,
       isVerified: true,
+      roles: ['USER'],
     });
   }
 }

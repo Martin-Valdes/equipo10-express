@@ -37,9 +37,8 @@ export class Client {
   })
   company: string;
 
-  @Column({
-    type: 'varchar',
-    default: 'user',
+  @Column("simple-json", {
+    default: 'USER',
     nullable: false, 
   })
   roles: string[];

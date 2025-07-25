@@ -28,8 +28,8 @@ export class AuthController {
   @ApiOperation({ summary: 'Iniciar sesión con email y contraseña' })
   @ApiBody({ type: RegisterDto, description: 'Datos de registro' })
   @ApiResponse({ status: 200, description: 'Registro exitoso' })
-  register(@Body() { email, password, lastName, firstName }: RegisterDto) {
-    return this.authService.register(email, password, lastName, firstName);
+  register(@Body() { email, password, lastName, firstName, roles }: RegisterDto) {
+    return this.authService.register(email, password, lastName, firstName, roles);
   }
 
   @Post('login')
@@ -58,6 +58,8 @@ export class AuthController {
         id: user.googleId,
         email: user.email,
         name: user.firstName,
+        lastName: user.lastName,
+        roles: user.roles,
       });
       res
         .cookie('access_token', token, {
