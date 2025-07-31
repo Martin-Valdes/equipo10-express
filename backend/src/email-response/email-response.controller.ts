@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { EmailResponseService } from './email-response.service';
 import { CreateEmailResponseDto } from './dto/create-email-response.dto';
 import {
@@ -90,6 +90,37 @@ export class EmailResponseController {
   })
   async findOne(@Param('id') id: string) {
     const emailResponse = await this.emailResponseService.findOne(+id);
+    return plainToInstance(EmailResponseDto, emailResponse);
+  }
+
+  @Put(':id')
+  @ApiOperation({
+    summary: 'Actualiza el email generado con IA asociado al id',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'Id unico del email generado',
+    type: Number,
+    example: 1,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Respuesta de la operacion procesada exitosamente',
+    type: EmailResponseDto,
+  })
+  @ApiResponse({ status: 404, description: 'Email generado no encontrado' })
+  @ApiResponse({
+    status: 500,
+    description: 'Error interno del servidor.',
+  })
+  async update(
+    @Param('id') id: string,
+    @Body() updateEmailResponseDto: CreateEmailResponseDto,
+  ) {
+    const emailResponse = await this.emailResponseService.update(
+      +id,
+      updateEmailResponseDto,
+    );
     return plainToInstance(EmailResponseDto, emailResponse);
   }
 

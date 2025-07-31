@@ -73,6 +73,27 @@ export class EmailResponseService {
     return emailReponse;
   }
 
+  async update(
+    id: number,
+    updateEmailResponseDto: CreateEmailResponseDto,
+  ): Promise<EmailResponse> {
+    const emailResponse = await this.emailResponseRepository.findOneBy({ id });
+    if (!emailResponse) {
+      throw new NotFoundException('El email que intentas actualizar no existe');
+    }
+    const { prompt, clientEmail } = updateEmailResponseDto;
+    const client = await this.clientRepository.findOne({
+      where: { email: clientEmail },
+    });
+    if (!client) {
+      throw new NotFoundException('Cliente no encontrado');
+    }
+    emailResponse.prompt = prompt;
+    emailResponse.client = client;
+    return this.emailResponseRepository.save(emailResponse);
+  }
+
+
   async remove(id: number) {
     const emailResponse = await this.emailResponseRepository.findOneBy({ id });
     if (!emailResponse) {

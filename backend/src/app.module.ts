@@ -9,6 +9,7 @@ import { ClientModule } from './client/client.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ContactsModule } from './contacts/contacts.module';
+import { EmailModule } from './email-send/email-send.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { ContactsModule } from './contacts/contacts.module';
     UsersModule,
     AuthModule,
     ContactsModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [

@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { ContactsModule } from 'src/contacts/contacts.module';
+import { EmailModule } from '../email-send/email-send.module';
 
 
 @Module({
@@ -15,6 +16,7 @@ import { ContactsModule } from 'src/contacts/contacts.module';
     ConfigModule,
     UsersModule,
     ContactsModule,
+    EmailModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
