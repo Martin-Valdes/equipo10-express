@@ -8,6 +8,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { ClientModule } from './client/client.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ContactsModule } from './contacts/contacts.module';
 
 
 @Module({
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     ClientModule,
     UsersModule,
     AuthModule,
+    ContactsModule,
   ],
   controllers: [AppController],
   providers: [

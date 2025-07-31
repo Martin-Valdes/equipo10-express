@@ -4,7 +4,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany
 } from 'typeorm';
+import { Contact } from '../../contacts/entities/contact.entity';
 
 @Entity()
 export class User {
@@ -54,4 +56,10 @@ export class User {
     onUpdate: 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @OneToMany(() => Contact, (contact) => contact.owner, {
+    cascade: true,
+    eager: false 
+  })
+  contacts: Contact[];
 }

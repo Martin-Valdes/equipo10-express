@@ -15,7 +15,7 @@ import { ValidationPipe } from '@nestjs/common/pipes';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import {
   ApiBody,
@@ -25,7 +25,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { RoleGuard } from '../auth/guards/roles.guard';
-import { Roles } from 'src/auth/decorators/roles.decorators';
+import { Roles } from '../auth/decorators/roles.decorators';
 import { Role } from '../auth/roles.enum';
 import { User } from './entities/user.entity';
 

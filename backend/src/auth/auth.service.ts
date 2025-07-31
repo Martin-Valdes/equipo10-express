@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { AuthEntity } from './entity/auth.entity';
 import { parse } from 'path/win32';
+import { ContactsService } from '../contacts/contacts.service';
 
 @Injectable()
 export class AuthService {
