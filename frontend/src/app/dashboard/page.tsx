@@ -90,6 +90,7 @@ export default function Dashboard() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
         },
         body: JSON.stringify({
           clientEmail: recipient.includes('@') ? recipient : 'client@example.com',
