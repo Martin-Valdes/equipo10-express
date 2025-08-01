@@ -378,7 +378,7 @@ export default function Dashboard() {
             )}
             {showSaveNotification && (
               <div className="fixed bottom-8 right-8 bg-blue-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 animate-fade-in">
-                Email guardado
+                Email guardado!
                 <button
                   className="ml-4 text-white font-bold"
                   onClick={() => setShowSaveNotification(false)}

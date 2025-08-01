@@ -24,7 +24,7 @@ export default function SavedEmails() {
       setError("");
       try {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/email-response/2`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/email-response/3`);
         if (!res.ok) throw new Error("No se pudo obtener el email guardado");
         const data = await res.json();
         // Map API response to SavedEmail[]
