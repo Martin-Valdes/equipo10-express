@@ -24,7 +24,6 @@ export class EmailResponseService {
     createEmailResponseDto: CreateEmailResponseDto,
   ): Promise<EmailResponse> {
     const { prompt, clientEmail } = createEmailResponseDto;
-   
     const client = await this.clientRepository.findOne({
       where: { email: clientEmail },
       // relations: { emailResponses: true },
