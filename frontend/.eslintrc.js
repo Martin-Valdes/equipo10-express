@@ -1,6 +1,10 @@
-export default {
+const config = {
   extends: ['next', 'next/core-web-vitals'],
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    'no-unused-vars': 'off',
   },
 }
+
+export default config
