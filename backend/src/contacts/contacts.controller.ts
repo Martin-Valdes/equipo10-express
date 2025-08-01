@@ -9,8 +9,7 @@ import {
   Query,
   UseGuards,
   UsePipes,
-  Request
-  
+  Request,
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import { CreateContactDto } from './dto/create-contact.dto';
@@ -19,10 +18,6 @@ import { PaginationQueryDto } from '../common/constants/dto/pagination-query.dto
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import {
-  ApiBody,
-  ApiOperation,
-  ApiParam,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { RoleGuard } from '../auth/guards/roles.guard';
@@ -43,16 +38,25 @@ export class ContactsController {
   }
 
   @Get()
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   async findAll(@Query() paginationQuery: PaginationQueryDto, @Request() req) {
     return this.contactsService.findAll(paginationQuery, req.user.id);
   }
 
   @Get(':id')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   async findOne(@Param('id') id: string, @Request() req) {
     return this.contactsService.findOne(id, req.user.id);
   }
 
   @Put(':id')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   async update(
     @Param('id') id: string,
     @Body() updateContactDto: UpdateContactDto,
@@ -62,11 +66,17 @@ export class ContactsController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   async remove(@Param('id') id: string, @Request() req) {
     return this.contactsService.remove(id, req.user.id);
   }
 
   @Put(':id/favorite')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   async toggleFavorite(@Param('id') id: string, @Request() req) {
     return this.contactsService.toggleFavorite(id, req.user.id);
   }

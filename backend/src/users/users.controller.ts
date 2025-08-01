@@ -78,7 +78,6 @@ export class UsersController {
   @ApiBearerAuth('jwt')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.ADMIN, Role.USER)
-  @ApiParam({ name: 'id', type: String })
   @ApiResponse({
     status: 200,
     description: 'User updated',
@@ -86,7 +85,7 @@ export class UsersController {
   })
   @ApiBody({ type: UpdateUserDto })
   async update(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto
   ): Promise<PublicUser> {
     return this.usersService.update(id, updateUserDto);
@@ -95,8 +94,7 @@ export class UsersController {
   @Delete(':id')
   @ApiBearerAuth('jwt')
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(Role.ADMIN)
-  @ApiParam({ name: 'id', type: String })
+  @Roles(Role.ADMIN, Role.USER)
   @ApiResponse({
     status: 200,
     description: 'User deleted',
@@ -105,7 +103,7 @@ export class UsersController {
     },
   })
   async remove(
-    @Param('id', ParseUUIDPipe) id: string
+    @Param('id') id: string
   ): Promise<{ message: string; status: number }> {
     return this.usersService.remove(id);
   }

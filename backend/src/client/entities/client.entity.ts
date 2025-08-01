@@ -37,7 +37,7 @@ export class Client {
   })
   company: string;
 
-  @Column("simple-json", {
+  @Column("text", {
     default: 'USER',
     nullable: false, 
   })

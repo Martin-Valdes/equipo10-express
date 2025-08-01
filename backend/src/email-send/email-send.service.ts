@@ -32,4 +32,8 @@ export class EmailService {
     const email = this.emailRepo.create({ to, subject, content, user });
     return this.emailRepo.save(email);
   }
+
+  async getAllEmails(): Promise<Email[]> {
+    return this.emailRepo.find();
+  }
 }

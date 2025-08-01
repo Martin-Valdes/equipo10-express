@@ -10,6 +10,12 @@ import {
 } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { EmailResponseDto } from './dto/email-reponse.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RoleGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorators';
+import { Role } from '../auth/roles.enum';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { UseGuards } from '@nestjs/common';
 
 @ApiTags('Email AI Response')
 @Controller('email-response')
@@ -17,6 +23,10 @@ export class EmailResponseController {
   constructor(private readonly emailResponseService: EmailResponseService) {}
 
   @Post()
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
+
   @ApiOperation({
     summary:
       'Procesa el email del cliente con IA, asocia un cliente y persiste informacion',
