@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Upload, Trash2, Copy, Bookmark } from "lucide-react";
 import Sidebar from "@/components/Sidebar/Sidebar";
 
@@ -15,7 +15,6 @@ export default function Dashboard() {
   const [replyToSpecific, setReplyToSpecific] = useState(false);
   const [originalEmailText, setOriginalEmailText] = useState("");
   const [generatedEmail, setGeneratedEmail] = useState("");
-  const [streamEmail, setStreamEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isSending, setIsSending] = useState(false);

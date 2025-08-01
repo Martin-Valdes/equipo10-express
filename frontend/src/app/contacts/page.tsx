@@ -96,7 +96,7 @@ export default function Contacts() {
     setIsAddModalOpen(true)
   }
 
-  const handleSaveNewContact = (newContact: { firstName: string; lastName: string; email: string; phone: string; company: string; jobTitle: string }) => {
+  const handleSaveNewContact = (_newContact: { firstName: string; lastName: string; email: string; phone: string; company: string; jobTitle: string }) => {
     // Refresh the contacts list after adding a new contact
     fetchContacts()
   }
