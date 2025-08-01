@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { EmailResponseService } from './email-response.service';
 import { CreateEmailResponseDto } from './dto/create-email-response.dto';
 import {
@@ -16,6 +24,7 @@ import { Roles } from '../auth/decorators/roles.decorators';
 import { Role } from '../auth/roles.enum';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { UseGuards } from '@nestjs/common';
+import { UpdateEmailResponseDto } from './dto/updateEmailResponse.dto';
 
 @ApiTags('Email AI Response')
 @Controller('email-response')
@@ -26,7 +35,6 @@ export class EmailResponseController {
   @ApiBearerAuth('jwt')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(Role.ADMIN, Role.USER)
-
   @ApiOperation({
     summary:
       'Procesa el email del cliente con IA, asocia un cliente y persiste informacion',
@@ -51,7 +59,7 @@ export class EmailResponseController {
   })
   async create(@Body() createEmailResponseDto: CreateEmailResponseDto) {
     const emailResponseEntity = await this.emailResponseService.create(
-      createEmailResponseDto,
+      createEmailResponseDto
     );
     return plainToInstance(EmailResponseDto, emailResponseEntity);
   }
@@ -103,36 +111,14 @@ export class EmailResponseController {
     return plainToInstance(EmailResponseDto, emailResponse);
   }
 
-  @Put(':id')
-  @ApiOperation({
-    summary: 'Actualiza el email generado con IA asociado al id',
-  })
-  @ApiParam({
-    name: 'id',
-    description: 'Id unico del email generado',
-    type: Number,
-    example: 1,
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Respuesta de la operacion procesada exitosamente',
-    type: EmailResponseDto,
-  })
-  @ApiResponse({ status: 404, description: 'Email generado no encontrado' })
-  @ApiResponse({
-    status: 500,
-    description: 'Error interno del servidor.',
-  })
-  async update(
-    @Param('id') id: string,
-    @Body() updateEmailResponseDto: CreateEmailResponseDto,
-  ) {
-    const emailResponse = await this.emailResponseService.update(
-      +id,
-      updateEmailResponseDto,
-    );
-    return plainToInstance(EmailResponseDto, emailResponse);
-  }
+ @Put(':id')
+async update(
+  @Param('id') id: string,
+  @Body() updateEmailResponseDto: UpdateEmailResponseDto
+) {
+  const emailResponse = await this.emailResponseService.update(+id, updateEmailResponseDto);
+  return plainToInstance(EmailResponseDto, emailResponse);
+}
 
   @Delete(':id')
   @ApiOperation({

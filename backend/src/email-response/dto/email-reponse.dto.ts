@@ -47,6 +47,12 @@ export class EmailResponseDto {
   model: string;
 
   @ApiProperty({
+    description: 'Email del cliente utilizado como prompt base para la IA',
+    example: 'Que es EasyemAIl?',
+  })
+  isFavorite: boolean;
+
+  @ApiProperty({
     description: 'Fecha y hora de creación de la respuesta.',
     example: '2023-10-27T10:00:00.000Z',
   })
