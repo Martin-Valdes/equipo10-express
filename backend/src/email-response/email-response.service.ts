@@ -9,6 +9,7 @@ import { Client } from '../client/entities/client.entity';
 import { LlmApiService } from '../llm-api/llm-api.service';
 import { CreateEmailResponseDto } from './dto/create-email-response.dto';
 import { EmailResponse } from './entities/email-response.entity';
+import { UpdateEmailResponseDto } from '../email-response/dto/updateEmailResponse.dto';
 
 @Injectable()
 export class EmailResponseService {
@@ -42,6 +43,7 @@ export class EmailResponseService {
         model: model,
         prompt: prompt,
         client: client,
+        isFavorite: createEmailResponseDto.isFavorite || false,
       });
       await this.emailResponseRepository.save(emailResponse);
       return emailResponse;
@@ -72,25 +74,17 @@ export class EmailResponseService {
     return emailReponse;
   }
 
-  async update(
-    id: number,
-    updateEmailResponseDto: CreateEmailResponseDto,
-  ): Promise<EmailResponse> {
-    const emailResponse = await this.emailResponseRepository.findOneBy({ id });
-    if (!emailResponse) {
-      throw new NotFoundException('El email que intentas actualizar no existe');
-    }
-    const { prompt, clientEmail } = updateEmailResponseDto;
-    const client = await this.clientRepository.findOne({
-      where: { email: clientEmail },
-    });
-    if (!client) {
-      throw new NotFoundException('Cliente no encontrado');
-    }
-    emailResponse.prompt = prompt;
-    emailResponse.client = client;
-    return this.emailResponseRepository.save(emailResponse);
+  async update(id: number, updateEmailResponseDto: UpdateEmailResponseDto): Promise<EmailResponse> {
+  const emailResponse = await this.emailResponseRepository.findOneBy({ id });
+
+  if (!emailResponse) {
+    throw new NotFoundException('Email no encontrado');
   }
+
+  Object.assign(emailResponse, updateEmailResponseDto); 
+
+  return this.emailResponseRepository.save(emailResponse);
+}
 
 
   async remove(id: number) {

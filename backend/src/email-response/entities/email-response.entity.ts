@@ -31,6 +31,12 @@ export class EmailResponse {
   })
   model: string;
 
+  @Column({
+    type: 'boolean',
+    default: false
+  })
+  isFavorite: boolean;
+
   @Column({ type: 'text' })
   prompt: string;
 
