@@ -4,7 +4,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Contact } from '../../contacts/entities/contact.entity';
+import { Email } from '../../email-send/entities/email-send.entity';
 
 @Entity()
 export class User {
@@ -31,20 +34,20 @@ export class User {
   @Column({
     type: 'varchar',
     length: 100,
-    nullable: true 
+    nullable: true,
   })
   password: string;
 
   @Column({
     type: 'varchar',
     length: 100,
-    nullable: true 
+    nullable: true,
   })
   roles: string[];
 
   @Column({ nullable: true })
   googleId: string;
-  
+
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
@@ -54,4 +57,16 @@ export class User {
     onUpdate: 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @OneToMany(() => Contact, (contact) => contact.owner, {
+    cascade: true,
+    eager: false,
+  })
+  contacts: Contact[];
+
+  @OneToMany(() => Contact, (contact) => contact.owner, {
+    cascade: true,
+    eager: false,
+  })
+  emails: Email[];
 }

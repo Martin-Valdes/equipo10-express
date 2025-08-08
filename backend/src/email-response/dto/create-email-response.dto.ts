@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreateEmailResponseDto {
   @ApiProperty({
@@ -21,4 +21,8 @@ export class CreateEmailResponseDto {
   @IsString({ message: 'El prompt debe ser una cadena de texto' })
   @IsNotEmpty({ message: 'El prompt es obligatorio' })
   prompt: string;
+
+  @IsBoolean()
+  @IsOptional()
+  isFavorite?: boolean;
 }

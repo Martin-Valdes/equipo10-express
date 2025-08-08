@@ -8,6 +8,9 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { ClientModule } from './client/client.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { EmailModule } from './email-send/email-send.module';
+import { FastApiModule } from './fast-api/fast-api.module';
 
 
 @Module({
@@ -24,6 +27,9 @@ import { AuthModule } from './auth/auth.module';
     ClientModule,
     UsersModule,
     AuthModule,
+    ContactsModule,
+    EmailModule,
+    FastApiModule,
   ],
   controllers: [AppController],
   providers: [

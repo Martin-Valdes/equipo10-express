@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { EmailResponseService } from './email-response.service';
 import { CreateEmailResponseDto } from './dto/create-email-response.dto';
 import {
@@ -10,6 +18,13 @@ import {
 } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { EmailResponseDto } from './dto/email-reponse.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RoleGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorators';
+import { Role } from '../auth/roles.enum';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { UseGuards } from '@nestjs/common';
+import { UpdateEmailResponseDto } from './dto/updateEmailResponse.dto';
 
 @ApiTags('Email AI Response')
 @Controller('email-response')
@@ -17,6 +32,9 @@ export class EmailResponseController {
   constructor(private readonly emailResponseService: EmailResponseService) {}
 
   @Post()
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
   @ApiOperation({
     summary:
       'Procesa el email del cliente con IA, asocia un cliente y persiste informacion',
@@ -41,7 +59,7 @@ export class EmailResponseController {
   })
   async create(@Body() createEmailResponseDto: CreateEmailResponseDto) {
     const emailResponseEntity = await this.emailResponseService.create(
-      createEmailResponseDto,
+      createEmailResponseDto
     );
     return plainToInstance(EmailResponseDto, emailResponseEntity);
   }
@@ -92,6 +110,15 @@ export class EmailResponseController {
     const emailResponse = await this.emailResponseService.findOne(+id);
     return plainToInstance(EmailResponseDto, emailResponse);
   }
+
+ @Put(':id')
+async update(
+  @Param('id') id: string,
+  @Body() updateEmailResponseDto: UpdateEmailResponseDto
+) {
+  const emailResponse = await this.emailResponseService.update(+id, updateEmailResponseDto);
+  return plainToInstance(EmailResponseDto, emailResponse);
+}
 
   @Delete(':id')
   @ApiOperation({
