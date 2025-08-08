@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "seed": "ts-node ./src/seeder.ts"
+    "seed": "ts-node ./src/seeder.ts",
+    "prod:start": "pm2-runtime app.js"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.0",
@@ -44,6 +45,7 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "pg": "^8.16.3",
+    "pm2": "^6.0.8",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.1",
